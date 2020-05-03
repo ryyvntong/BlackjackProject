@@ -1,0 +1,36 @@
+.mainpage{
+    background-image: url('../../assets/BjBackgroundPic.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height:90vh
+    
+}
+
+.titlefont{
+    border-left: 2px solid;
+    margin-left: 7px;
+    padding-left:20px;
+    margin-top: 30px;
+    border-top:2px solid;
+    font-size: 50px;
+    font-family: 'Dancing Script', cursive;
+    width: 250px;
+
+}
+
+.menuitem{
+    font-family: 'Caveat', cursive;
+    display: block;
+    margin-left: 30px;
+    font-size: 30px;
+    color: #FF2400;
+}
+
+.icon{
+    margin-top: 20px;
+    width: 40px;
+    height: 40px;
+    float:right;
+}
+
