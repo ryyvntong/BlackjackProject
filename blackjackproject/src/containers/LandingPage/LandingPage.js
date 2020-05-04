@@ -17,10 +17,22 @@ import {
 import {Container, Row, Col} from 'reactstrap'
 import {NavLink as RouteLink} from 'react-router-dom'
 import bjIcon from '../../assets/icon.png'
+import MenuItems from "../../components/menuitems/MenuItems"
+import {connect} from "react-redux"
 
 
 export class LandingPage extends Component{
+    state={
+        menuOption:"home"
+    }
     render(){
+        if(this.props.menu=="home"){
+            //put home menu here
+        }else if(this.props.menu==="rules"){
+            //putruleshere
+        }else{
+            //put settings page here
+        }
         return(
             <div>
                 <Navbar color="dark" dark expand="md">
@@ -55,9 +67,10 @@ export class LandingPage extends Component{
                         <Col xs="4">
                             <p className={classes.titlefont}>Blackjack<img className={classes.icon} src={bjIcon}></img></p>
                         <div>
-                        <RouteLink to="/test" className={classes.menuitem}>Start</RouteLink>
-                        <RouteLink to="/test" className={classes.menuitem}>Rules</RouteLink>
-                        <RouteLink to="/test" className={classes.menuitem}>Settings</RouteLink>
+                            <MenuItems></MenuItems>
+                        {/* <RouteLink to="/test" className={classes.menuitem}>Start <i style={glyphStyle} class="fas fa-play"></i></RouteLink>
+                        <RouteLink to="/test" className={classes.menuitem}>Rules <i style={glyphStyle}></i></RouteLink>
+                        <RouteLink to="/test" className={classes.menuitem}>Settings</RouteLink> */}
                         </div>
                         </Col>
                         
@@ -69,4 +82,10 @@ export class LandingPage extends Component{
         
 }};
 
-export default LandingPage;
+const mapStateToProps = state =>{
+    return {
+        menu:state.menuOption
+    };
+}
+
+export default connect(mapStateToProps)(LandingPage);

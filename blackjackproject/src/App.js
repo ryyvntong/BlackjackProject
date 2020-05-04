@@ -25,3 +25,5 @@ class App extends Component {
 }
 
 export default App;
+
+//make layout make render. redux for settings and rules 

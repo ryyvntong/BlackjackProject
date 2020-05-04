@@ -19,18 +19,14 @@
 
 }
 
-.menuitem{
-    font-family: 'Caveat', cursive;
-    display: block;
-    margin-left: 30px;
-    font-size: 30px;
-    color: #FF2400;
-}
-
 .icon{
     margin-top: 20px;
     width: 40px;
     height: 40px;
     float:right;
+}
+
+.glyphs{
+    margin-left: 20px;
 }
 
