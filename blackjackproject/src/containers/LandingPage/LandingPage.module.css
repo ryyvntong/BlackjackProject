@@ -1,9 +1,13 @@
+
 .mainpage{
     background-image: url('../../assets/BjBackgroundPic.jpg');
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    height:90vh
+    height:100%;
+    min-height: 100vh;
+ 
+ 
     
 }
 
@@ -30,3 +34,11 @@
     margin-left: 20px;
 }
 
+.menuitem{
+    font-family: 'Caveat', cursive;
+    display: block;
+    margin-left: 30px;
+    font-size: 30px;
+    color: #FF2400;
+    margin-bottom: 10px;
+}

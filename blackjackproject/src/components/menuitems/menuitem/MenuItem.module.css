@@ -5,3 +5,8 @@
     font-size: 30px;
     color: #FF2400;
 }
+
+.menuitem:hover{
+    color: skyblue;
+
+}

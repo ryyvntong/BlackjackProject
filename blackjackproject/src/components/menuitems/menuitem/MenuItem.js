@@ -1,5 +1,4 @@
 import React from 'react'
-import {NavLink} from 'react-router-dom'
 import classes from './MenuItem.module.css'
 
 const menuItem=(props)=>{
@@ -8,7 +7,7 @@ const menuItem=(props)=>{
         marginLeft:"10px"
     }
     return(
-        <NavLink to={props.link} className={classes.menuitem}>{props.children}<i style={glyphStyle} class={props.icon}></i></NavLink>
+        <p onClick={props.clicked} className={classes.menuitem}>{props.children}<i style={glyphStyle} class={props.icon}></i></p>
         
     )
 };

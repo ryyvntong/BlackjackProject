@@ -15,26 +15,43 @@ import {
     NavbarText
   } from 'reactstrap';
 import {Container, Row, Col} from 'reactstrap'
-import {NavLink as RouteLink} from 'react-router-dom'
+import {NavLink as RouteLink, Route} from 'react-router-dom'
 import bjIcon from '../../assets/icon.png'
 import MenuItems from "../../components/menuitems/MenuItems"
 import {connect} from "react-redux"
+import Rules from '../../components/rules/rules'
+import MenuItem from '../../components/menuitems/menuitem/MenuItem'
+import Settings from "../../components/settings/settings"
 
 
 export class LandingPage extends Component{
     state={
         menuOption:"home"
     }
+    testFunc=()=>{
+        console.log('hi')
+    }
+    
     render(){
+        const glyphStyle={
+            fontSize:"20px",
+            marginLeft:"10px"
+        }
+        let menu;
         if(this.props.menu=="home"){
-            //put home menu here
+            menu=(<div>
+                    <RouteLink to="/play" className={classes.menuitem}>Start<i style={glyphStyle} class="fas fa-play"></i></RouteLink>
+                    <MenuItems clickedRules={this.props.onRulesSelect} clickedSettings={this.props.onSettingsSelect}></MenuItems>
+                </div>)
         }else if(this.props.menu==="rules"){
-            //putruleshere
+            menu=(<div><Rules></Rules>
+                <MenuItem clicked={this.props.onBackSelect} icon="fas fa-arrow-left">Back</MenuItem>
+                </div>)
         }else{
-            //put settings page here
+            menu=(<div><Settings></Settings><MenuItem clicked={this.props.onBackSelect} icon="fas fa-arrow-left">Back</MenuItem></div>)
         }
         return(
-            <div>
+            <div className={classes.parentDiv}>
                 <Navbar color="dark" dark expand="md">
                     <Nav className="mr-auto" navbar>
                     <NavItem>
@@ -60,17 +77,14 @@ export class LandingPage extends Component{
                         </DropdownItem>
                     </DropdownMenu>
                     </UncontrolledDropdown>
-                    </Nav>
+                    </Nav> 
                 </Navbar>
-                <Container fluid={true} class="h-100">
-                    <Row className={classes.mainpage}>
-                        <Col xs="4">
+                <Container fluid={true} className={classes.mainpage}>
+                    <Row>
+                        <Col xs="5">
                             <p className={classes.titlefont}>Blackjack<img className={classes.icon} src={bjIcon}></img></p>
                         <div>
-                            <MenuItems></MenuItems>
-                        {/* <RouteLink to="/test" className={classes.menuitem}>Start <i style={glyphStyle} class="fas fa-play"></i></RouteLink>
-                        <RouteLink to="/test" className={classes.menuitem}>Rules <i style={glyphStyle}></i></RouteLink>
-                        <RouteLink to="/test" className={classes.menuitem}>Settings</RouteLink> */}
+                        {menu}
                         </div>
                         </Col>
                         
@@ -82,10 +96,22 @@ export class LandingPage extends Component{
         
 }};
 
+//994D-FA88
+
+
+
 const mapStateToProps = state =>{
     return {
-        menu:state.menuOption
+        menu:state.menu.menuOption
     };
 }
 
-export default connect(mapStateToProps)(LandingPage);
+const mapDispatchToProps = dispatch =>{
+    return {
+       onRulesSelect: () => dispatch  ({type: "RULES"}),
+       onSettingsSelect: () => dispatch ({type: "SETTINGS"}),
+       onBackSelect: ()=>dispatch ({type:"HOME"})
+    };
+}
+
+export default connect(mapStateToProps , mapDispatchToProps)(LandingPage);
