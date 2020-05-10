@@ -9,10 +9,12 @@ import {createStore, combineReducers} from 'redux';
 import {Provider} from 'react-redux';
 import menuReducer from './store/reducers/menureducer'
 import settingsReducer from './store/reducers/settingsreducer'
+import playReducer from './store/reducers/playreducer'
 
 const rootReducer=combineReducers({
   menu:menuReducer,
-  settings:settingsReducer
+  settings:settingsReducer,
+  play:playReducer
 });
 
 const store=createStore(rootReducer);

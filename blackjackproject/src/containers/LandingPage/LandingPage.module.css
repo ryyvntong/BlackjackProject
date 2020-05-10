@@ -42,3 +42,8 @@
     color: #FF2400;
     margin-bottom: 10px;
 }
+
+.header{
+    text-align: center;
+    font-family: 'Caveat',cursive;
+}

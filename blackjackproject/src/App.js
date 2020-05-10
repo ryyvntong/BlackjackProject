@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import './App.css';
 import LandingPage from './containers/LandingPage/LandingPage'
 import {Route, Switch, Redirect} from 'react-router-dom'
-
+import PlayPage from './containers/PlayPage/PlayPage'
 
 // import Logout from './containers/auth/logout/logout'
 // import {connect} from 'react-redux'
@@ -11,6 +11,7 @@ class App extends Component {
   render (){
     let routes=(
     <Switch>
+      <Route exact path="/play" component={PlayPage}></Route>
       <Route exact path="/" component={LandingPage}></Route>
       <Redirect to="/"></Redirect>
     </Switch>

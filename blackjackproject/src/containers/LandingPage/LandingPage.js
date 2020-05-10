@@ -1,19 +1,5 @@
 import React, {Component,useState} from 'react';
 import classes from '../LandingPage/LandingPage.module.css'
-import {
-    Collapse,
-    Navbar,
-    NavbarToggler,
-    NavbarBrand,
-    Nav,
-    NavItem,
-    NavLink,
-    UncontrolledDropdown,
-    DropdownToggle,
-    DropdownMenu,
-    DropdownItem,
-    NavbarText
-  } from 'reactstrap';
 import {Container, Row, Col} from 'reactstrap'
 import {NavLink as RouteLink, Route} from 'react-router-dom'
 import bjIcon from '../../assets/icon.png'
@@ -22,7 +8,7 @@ import {connect} from "react-redux"
 import Rules from '../../components/rules/rules'
 import MenuItem from '../../components/menuitems/menuitem/MenuItem'
 import Settings from "../../components/settings/settings"
-
+import Navibar from '../../components/navbar/navbar'
 
 export class LandingPage extends Component{
     state={
@@ -52,33 +38,7 @@ export class LandingPage extends Component{
         }
         return(
             <div className={classes.parentDiv}>
-                <Navbar color="dark" dark expand="md">
-                    <Nav className="mr-auto" navbar>
-                    <NavItem>
-                    <NavLink href="/components/">Components</NavLink>
-                    </NavItem>
-                    <NavItem>
-                    <NavLink href="https://github.com/reactstrap/reactstrap">GitHub</NavLink>
-                    </NavItem>
-                    <UncontrolledDropdown nav inNavbar>
-                    <DropdownToggle nav caret>
-                        Options
-                    </DropdownToggle>
-                    <DropdownMenu right>
-                        <DropdownItem>
-                        Option 1
-                        </DropdownItem>
-                        <DropdownItem>
-                        Option 2
-                        </DropdownItem>
-                        <DropdownItem divider />
-                        <DropdownItem>
-                        Reset
-                        </DropdownItem>
-                    </DropdownMenu>
-                    </UncontrolledDropdown>
-                    </Nav> 
-                </Navbar>
+                <Navibar/>
                 <Container fluid={true} className={classes.mainpage}>
                     <Row>
                         <Col xs="5">
