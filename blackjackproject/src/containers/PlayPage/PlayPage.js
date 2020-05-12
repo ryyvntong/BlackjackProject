@@ -12,16 +12,37 @@ import {Connect} from 'react-redux'
 import {NavLink as RouteLink} from 'react-router-dom'
 import axios from 'axios'
 class PlayPage extends Component{
+    dealCardsHandler=()=>{
+        this.props.startGame()
+        axios.get("http://127.0.0.1:5000/deal").then
+        (response=>{this.props.dealHandler(response.data["cards"])})}
+
+    hitCardHandler=()=>{
+        let data={
+            handValue:this.props.playerTotal
+        }
+        axios.post("http://127.0.0.1:5000/hit",data).then
+        (response=>{this.props.hitHandler(response.data["cards"])
+    console.log(this.props.playerTotal)})
+    }
+
+    standHandler=()=>{
+        let data={
+            handValue:this.props.dealerTotal
+        }
+        axios.post("http://127.0.0.1:5000/stand",data).then(response=>{console.log(response.data)})
+    }
+
+    // checkWin=()=>{
+
+    // }
+
     render(){
         const glyphStyle={
             fontSize:"20px",
             marginLeft:"10px"
         }
-        let dealCardsHandler=()=>{
-            axios.get("http://127.0.0.1:5000/deal").then
-            (response=>{this.props.dealHandler(response.data["cards"])
-        console.log(response.data["cards"])})
-        }
+    
         let dealerCards=this.props.dealerCardImgs.map(image => {
             return <img className={classes.cards} src={image}></img>
         })
@@ -42,21 +63,21 @@ class PlayPage extends Component{
                         <div className={classes.hands}>{playerCards}</div>
                         <Row>
                             <Col className={classes.buttonbar}>
-                                <Button disabled={this.props.playing} onClick={dealCardsHandler} className={classes.button} color="success">Deal</Button>
-                                <Button className={classes.button}color="success">Hit</Button>
-                                <Button className={classes.button} color="success">Stand</Button>
-                                <Button className={classes.button} color="success">Double Down</Button>
-                                <Button className={classes.button} color="success">Reset Bet</Button>
+                                <Button disabled={this.props.playing} onClick={this.dealCardsHandler} className={classes.button} color="success">Deal</Button>
+                                <Button disabled={!this.props.playing} className={classes.button} onClick={this.hitCardHandler} color="success">Hit</Button>
+                                <Button disabled={!this.props.playing} className={classes.button} onClick={this.standHandler} color="success">Stand</Button>
+                                <Button disabled={!this.props.playing} className={classes.button} color="success">Double Down</Button>
+                                <Button disabled={this.props.playing} className={classes.button} onClick={this.props.resetBet} color="success">Reset Bet</Button>
                             </Col>
                         </Row>
                         <Container className={classes.actionholder}>
                             <Row>
                                 <Col xs="9" className={classes.chipbar}>
-                                        <img className={classes.chips} onClick={this.props.betOne} src={OneChip}></img>
-                                        <img className={classes.chips} onClick={this.props.betFive} src={FiveChip}></img>
-                                        <img className={classes.chips} onClick={this.props.betTen} src={TenChip}></img>
-                                        <img className={classes.chips} onClick={this.props.betTwoFive} src={TwoFiveChip}></img>
-                                        <img className={classes.chips} onClick={this.props.betHun} src={HunChip}></img>
+                                        <input disabled={this.props.playing} type="image" className={classes.chips} onClick={this.props.betOne} src={OneChip}></input>
+                                        <input disabled={this.props.playing} type="image" className={classes.chips} onClick={this.props.betFive} src={FiveChip}></input>
+                                        <input disabled={this.props.playing} type="image" className={classes.chips} onClick={this.props.betTen} src={TenChip}></input>
+                                        <input disabled={this.props.playing} type="image" className={classes.chips} onClick={this.props.betTwoFive} src={TwoFiveChip}></input>
+                                        <input disabled={this.props.playing} type="image" className={classes.chips} onClick={this.props.betHun} src={HunChip}></input>
                                 </Col>
                                 <Col xs="3" className={classes.betdisplay}>
                                     <p>Bet: {this.props.betAmt}</p>
@@ -83,7 +104,9 @@ const mapStateToProps = state =>{
         playing:state.play.playing,
         standing:state.play.standing,
         dealerCardImgs:state.play.dealerImgArray,
-        playerCardImgs:state.play.playerImgArray
+        playerCardImgs:state.play.playerImgArray,
+        dealerTotal:state.play.dealSum,
+        playerTotal:state.play.playerSum
     };
 }
 
@@ -94,7 +117,10 @@ const mapDispatchToProps = dispatch =>{
        betTen: ()=>dispatch ({type:"TEN"}),
        betTwoFive: () => dispatch ({type: "TWOFIVE"}),
        betHun: ()=>dispatch ({type:"HUN"}),
-       dealHandler:(cardArray)=>dispatch({type:"DEAL",cards:cardArray})
+       dealHandler:(cardArray)=>dispatch({type:"DEAL",cards:cardArray}),
+       hitHandler:(card)=>dispatch({type:"HIT",returnedCard:card}),
+       resetBet:()=>dispatch({type:"RESET"}),
+       startGame:()=>dispatch({type:"START"})
     };
 }
 
