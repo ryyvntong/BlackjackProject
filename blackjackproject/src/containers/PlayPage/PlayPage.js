@@ -30,12 +30,19 @@ class PlayPage extends Component{
         let data={
             handValue:this.props.dealerTotal
         }
-        axios.post("http://127.0.0.1:5000/stand",data).then(response=>{console.log(response.data)})
-    }
+            axios.post("http://127.0.0.1:5000/stand",data).then(response=>{this.props.standHandler(response.data["cards"])})}
 
-    // checkWin=()=>{
-
+    // doubleDownHandler=()=>{
+    //     //run hit req then stand req instantly
     // }
+
+    //         // this.props.standHandler(response.data["cards"]
+    //     // while (drawAgain==true){
+    //     //     axios.post("http://127.0.0.1:5000/stand",data).then(response=>{this.props.standHandler(response.data["cards"])})}}
+
+    // // checkWin=()=>{
+
+    // // }
 
     render(){
         const glyphStyle={
@@ -120,7 +127,8 @@ const mapDispatchToProps = dispatch =>{
        dealHandler:(cardArray)=>dispatch({type:"DEAL",cards:cardArray}),
        hitHandler:(card)=>dispatch({type:"HIT",returnedCard:card}),
        resetBet:()=>dispatch({type:"RESET"}),
-       startGame:()=>dispatch({type:"START"})
+       startGame:()=>dispatch({type:"START"}),
+       standHandler:(data)=>dispatch({type:"STAND",cardData:data})
     };
 }
 

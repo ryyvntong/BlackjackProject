@@ -38,6 +38,52 @@ const reducer=(state=initialState,action)=>{
             }
             return updateObject(state,updatedState)
 
+        case "STAND":
+            winnings=prevBet*state.bjMultiplier+prevBet
+            holdArrayImg=[...state.dealerImgArray]
+            holdArrayDealerValues=[...state.dealerHandCards]
+            console.log(action["cardData"])
+            for(let card of action["cardData"]){
+                holdArrayImg.push(card["image"])
+                holdArrayDealerValues.push(card["value"])
+            }
+            holdArrayImg[0]=state.firstCard
+            console.log(holdArrayDealerValues)
+            updatedState={
+                dealerImgArray:holdArrayImg,
+                dealerHandCards:holdArrayDealerValues,
+                dealSum:holdArrayDealerValues.reduce(handReducer)
+            }
+            console.log(updatedState.dealSum)
+            //determine winner
+            holdState={...updatedState,
+                playing:false,
+                dealSum:0,
+                playerSum:0,
+                dealerHandCards:[],
+                playerHandCards:[],
+                bet:0
+            }
+            //tie
+            if(state.playerSum==updatedState.dealSum){
+                updatedState={...holdState,
+                    Amount:prevAmt+prevBet
+                }}
+                else if(state.playerSum>updatedState.dealSum || updatedState.dealSum>21){
+                    updatedState={...holdState,
+                        Amount:prevAmt+winnings
+                    }//playerWin
+                }else{
+                    updatedState={
+                        ...holdState,
+                        Amount:prevAmt
+                    }
+                }
+            
+            return updateObject(state,updatedState)
+
+
+
         case "HIT":
             holdArrayImg=[...state.playerImgArray]
             holdArrayImg.push(action["returnedCard"][0]["image"])
@@ -47,6 +93,17 @@ const reducer=(state=initialState,action)=>{
                 playerImgArray:holdArrayImg,
                 playerHandCards:holdArrayPlayerValues,
                 playerSum:holdArrayPlayerValues.reduce(handReducer)
+            }
+            if(updatedState.playerSum>21){
+                holdState={...updatedState,
+                    playerSum:0,
+                    bet:0,
+                    dealSum:0,
+                    playing:false,
+                    dealerHandCards:[],
+                    playerHandCards:[]
+                }
+                updatedState={...holdState}
             }
 
             return updateObject(state,updatedState)
@@ -69,7 +126,8 @@ const reducer=(state=initialState,action)=>{
                 dealerHandCards:holdArrayDealerValues,
                 playerHandCards:holdArrayPlayerValues,
                 dealSum:holdArrayDealerValues.reduce(handReducer),
-                playerSum:holdArrayPlayerValues.reduce(handReducer)
+                playerSum:holdArrayPlayerValues.reduce(handReducer),
+                firstCard:firstCardHolder
             }
             //check if initial hand is blackjack and dealer 
             if(updatedState["playerSum"]==21 || updatedState["dealSum"]==21){
@@ -81,7 +139,9 @@ const reducer=(state=initialState,action)=>{
                     playerImgArray:[action["cards"][2]["image"],action["cards"][3]["image"]],
                     dealSum:0,
                     playerSum:0,
-                    bet:0
+                    bet:0,
+                    dealerHandCards:[],
+                    playerHandCards:[]
                 }
                 if(updatedState["playerSum"]==21 && updatedState["dealSum"]<21){
                     updatedState={

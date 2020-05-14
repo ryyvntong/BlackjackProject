@@ -38,7 +38,7 @@
     height:150px;
     margin-left: 5%;
     margin-right:5%;
-    width: auto;
+    width:auto;
     margin-top: -10px;
     text-align: center;
     padding-top:5px;
@@ -54,8 +54,8 @@
 
 
 .cards{
-    max-width: 100%;
-    max-height: 100%;
+    width: 15%;
+    height: 100%;
 }
 
 .chips{
@@ -88,7 +88,7 @@
 .betdisplay{
     text-align: right;
     font-family: 'Dancing Script', cursive;
-    font-size: 25px;
+    font-size: 20px;
     margin-top:15px;
 }
 
@@ -105,6 +105,7 @@
 .button{
     max-width: 20%;
     margin-left: 5px;
+    font-size:5px;
 }
 
 .backbar{
@@ -119,3 +120,12 @@
     color: #FF2400;
     margin-bottom: 10px;
 }
+
+
+@media screen and (max-width: 600px) {
+    .center {
+        width: 100%;
+        margin-left:0px;
+        margin-right: 0px;
+    }
+  }
