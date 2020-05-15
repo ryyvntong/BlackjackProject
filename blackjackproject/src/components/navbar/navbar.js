@@ -28,23 +28,6 @@ class NaviBar extends Component{
             <NavItem>
             <NavLink href="https://github.com/ryyvntong/BlackjackProject/tree/master/blackjackproject">GitHub Repo <i class="fab fa-github-square"></i></NavLink>
             </NavItem>
-            <UncontrolledDropdown nav inNavbar>
-            <DropdownToggle nav caret>
-                Options
-            </DropdownToggle>
-            <DropdownMenu right>
-                <DropdownItem>
-                Option 1
-                </DropdownItem>
-                <DropdownItem>
-                Option 2
-                </DropdownItem>
-                <DropdownItem divider />
-                <DropdownItem>
-                Reset
-                </DropdownItem>
-            </DropdownMenu>
-            </UncontrolledDropdown>
             </Nav> 
         </Navbar>
         )

@@ -12,6 +12,26 @@ import {Connect} from 'react-redux'
 import {NavLink as RouteLink} from 'react-router-dom'
 import axios from 'axios'
 class PlayPage extends Component{
+
+    doubleDownHandler=()=>{
+        this.props.doubleBet()
+        let data={
+            handValue:this.props.playerTotal,
+            handArray:this.props.playerHandCards
+        }
+        //double bets here
+        axios.post("http://127.0.0.1:5000/hit",data).then
+        (response=>{this.props.hitHandler(response.data["cards"],response.data)
+            data={
+                handValue:this.props.dealerTotal,
+                handArray:this.props.dealerHandCards
+            }
+            axios.post("http://127.0.0.1:5000/stand",data).then(response=>{this.props.standHandler(response.data["cards"],response.data)})
+            //hit the stand fxn
+
+    })
+    }
+
     dealCardsHandler=()=>{
         this.props.startGame()
         axios.get("http://127.0.0.1:5000/deal").then
@@ -19,18 +39,20 @@ class PlayPage extends Component{
 
     hitCardHandler=()=>{
         let data={
-            handValue:this.props.playerTotal
+            handValue:this.props.playerTotal,
+            handArray:this.props.playerHandCards
         }
         axios.post("http://127.0.0.1:5000/hit",data).then
-        (response=>{this.props.hitHandler(response.data["cards"])
-    console.log(this.props.playerTotal)})
+        (response=>{this.props.hitHandler(response.data["cards"],response.data)
+    console.log(response.data)})
     }
 
     standHandler=()=>{
         let data={
-            handValue:this.props.dealerTotal
+            handValue:this.props.dealerTotal,
+            handArray:this.props.dealerHandCards
         }
-            axios.post("http://127.0.0.1:5000/stand",data).then(response=>{this.props.standHandler(response.data["cards"])})}
+            axios.post("http://127.0.0.1:5000/stand",data).then(response=>{this.props.standHandler(response.data["cards"],response.data)})}
 
     // doubleDownHandler=()=>{
     //     //run hit req then stand req instantly
@@ -57,7 +79,8 @@ class PlayPage extends Component{
             return <img className={classes.cards} src={image}></img>
         })
 
-
+        let doubleDownAvailable=((this.props.firstTurnStatus && this.props.playing) && (this.props.playAmt-this.props.betAmt>0))
+        console.log(doubleDownAvailable)
         return(
             <div>
                 <Navibar/>
@@ -73,7 +96,7 @@ class PlayPage extends Component{
                                 <Button disabled={this.props.playing} onClick={this.dealCardsHandler} className={classes.button} color="success">Deal</Button>
                                 <Button disabled={!this.props.playing} className={classes.button} onClick={this.hitCardHandler} color="success">Hit</Button>
                                 <Button disabled={!this.props.playing} className={classes.button} onClick={this.standHandler} color="success">Stand</Button>
-                                <Button disabled={!this.props.playing} className={classes.button} color="success">Double Down</Button>
+                                <Button disabled={!doubleDownAvailable} className={classes.button} onClick={this.doubleDownHandler} color="success">Double Down</Button>
                                 <Button disabled={this.props.playing} className={classes.button} onClick={this.props.resetBet} color="success">Reset Bet</Button>
                             </Col>
                         </Row>
@@ -113,7 +136,10 @@ const mapStateToProps = state =>{
         dealerCardImgs:state.play.dealerImgArray,
         playerCardImgs:state.play.playerImgArray,
         dealerTotal:state.play.dealSum,
-        playerTotal:state.play.playerSum
+        playerTotal:state.play.playerSum,
+        playerHandCards:state.play.playerHandCards,
+        dealerHandCards:state.play.dealerHandCards,
+        firstTurnStatus:state.play.firstTurn
     };
 }
 
@@ -125,10 +151,11 @@ const mapDispatchToProps = dispatch =>{
        betTwoFive: () => dispatch ({type: "TWOFIVE"}),
        betHun: ()=>dispatch ({type:"HUN"}),
        dealHandler:(cardArray)=>dispatch({type:"DEAL",cards:cardArray}),
-       hitHandler:(card)=>dispatch({type:"HIT",returnedCard:card}),
+       hitHandler:(card,info)=>dispatch({type:"HIT",returnedCard:card,playerInfo:info}),
        resetBet:()=>dispatch({type:"RESET"}),
        startGame:()=>dispatch({type:"START"}),
-       standHandler:(data)=>dispatch({type:"STAND",cardData:data})
+       standHandler:(card,info)=>dispatch({type:"STAND",cardData:card,dealerInfo:info}),
+       doubleBet:()=>dispatch({type:"DOUBLE"})
     };
 }
 
