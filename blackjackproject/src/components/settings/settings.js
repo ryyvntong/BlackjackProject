@@ -18,7 +18,6 @@ const settings =(props) =>{
             <Form>
                     <h1 className={classes.header}>Settings</h1>
                 <Container className={classes.formbg}>
-                    <CustomInput defaultChecked={checkVal} onClick={()=>{props.onRuleSelect(checkVal)}} type="switch" id="exampleCustomSwitch" name="customSwitch" label="Dealer must hit until 17" />
                     <div className={classes.formrow}> 
                     <p>Set Normal Payout Multiplier (Default is 1x):</p>
                     <Input defaultValue={props.normalPay} onClick={(event)=>props.onNormalPayoutSelect(event.target.value)} type="select" name="select" id="exampleSelect">
@@ -46,15 +45,13 @@ const settings =(props) =>{
 
 const mapStateToProps = state =>{
     return {
-        rules:state.settings.rulesSetting,
-        normalPay:state.settings.normalPayout,
-        bjPay:state.settings.bjPayout
+        normalPay:state.play.normalMultiplier,
+        bjPay:state.play.bjMultiplier
     };
 }
 
 const mapDispatchToProps = dispatch =>{
     return {
-       onRuleSelect: (checkval) => dispatch  ({type: "RULE", checked:checkval}),
        onNormalPayoutSelect: (eventval) => dispatch ({type: "NPAYOUT", value:eventval}),
        onBjPayoutSelect: (eventval)=>dispatch ({type:"BJPAYOUT", value:eventval})
     };

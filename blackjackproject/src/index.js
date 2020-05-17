@@ -8,12 +8,10 @@ import 'bootstrap/dist/css/bootstrap.css';
 import {createStore, combineReducers} from 'redux';
 import {Provider} from 'react-redux';
 import menuReducer from './store/reducers/menureducer'
-import settingsReducer from './store/reducers/settingsreducer'
 import playReducer from './store/reducers/playreducer'
 
 const rootReducer=combineReducers({
   menu:menuReducer,
-  settings:settingsReducer,
   play:playReducer
 });
 

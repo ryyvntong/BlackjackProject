@@ -239,6 +239,16 @@ const reducer=(state=initialState,action)=>{
         }else{
             return state;
         }
+        case "NPAYOUT":
+            updatedState={
+                normalMultiplier:action["value"]
+            };
+            return updateObject(state,updatedState);
+        case "BJPAYOUT":
+            updatedState={
+                bjMultiplier:action["value"]
+            }
+            return updateObject(state,updatedState);
             
         
     }

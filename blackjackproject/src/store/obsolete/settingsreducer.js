@@ -1,5 +1,8 @@
 import {updateObject} from "../utility/utility"
 
+
+
+//NOT USED
 const initialState={
     rulesSetting:"casino", //casino or normal, dealer hits till 17
     normalPayout:1,
