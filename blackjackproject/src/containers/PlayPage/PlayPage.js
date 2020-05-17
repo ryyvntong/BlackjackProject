@@ -20,13 +20,13 @@ class PlayPage extends Component{
             handArray:this.props.playerHandCards
         }
         //double bets here
-        axios.post("http://127.0.0.1:5000/hit",data).then
+        axios.post("https://deckofcardsapi.herokuapp.com/hit",data).then
         (response=>{this.props.hitHandler(response.data["cards"],response.data)
             data={
                 handValue:this.props.dealerTotal,
                 handArray:this.props.dealerHandCards
             }
-            axios.post("http://127.0.0.1:5000/stand",data).then(response=>{this.props.standHandler(response.data["cards"],response.data)})
+            axios.post("https://deckofcardsapi.herokuapp.com/stand",data).then(response=>{this.props.standHandler(response.data["cards"],response.data)})
             //hit the stand fxn
 
     })
@@ -34,7 +34,7 @@ class PlayPage extends Component{
 
     dealCardsHandler=()=>{
         this.props.startGame()
-        axios.get("http://127.0.0.1:5000/deal").then
+        axios.get("https://deckofcardsapi.herokuapp.com/deal").then
         (response=>{this.props.dealHandler(response.data["cards"])})}
 
     hitCardHandler=()=>{
@@ -42,7 +42,7 @@ class PlayPage extends Component{
             handValue:this.props.playerTotal,
             handArray:this.props.playerHandCards
         }
-        axios.post("http://127.0.0.1:5000/hit",data).then
+        axios.post("https://deckofcardsapi.herokuapp.com/hit",data).then
         (response=>{this.props.hitHandler(response.data["cards"],response.data)
     console.log(response.data)})
     }
@@ -52,7 +52,7 @@ class PlayPage extends Component{
             handValue:this.props.dealerTotal,
             handArray:this.props.dealerHandCards
         }
-            axios.post("http://127.0.0.1:5000/stand",data).then(response=>{this.props.standHandler(response.data["cards"],response.data)})}
+            axios.post("https://deckofcardsapi.herokuapp.com/stand",data).then(response=>{this.props.standHandler(response.data["cards"],response.data)})}
 
     // doubleDownHandler=()=>{
     //     //run hit req then stand req instantly
